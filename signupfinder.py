@@ -27,7 +27,18 @@ date_regex = re.compile(r'ˆ\d{1,2}\/\d{1,2}\/\d{4}')
 def find_date(data):
 	date_regex = re.compile(r'^\d{1,2}\/d{1,2}\/\d{4}')
 	search_date = date_regex.search(data)
-	if search_date:
+	if search_date.group():
 		return True
 
 # TODO: Now use the above function to make a list in a list? 
+# TODO: Add the following lists without a date feature to this date
+
+table_first = [item[0] for item in table_data] # gets the first item in the sublist BUT we want to iterate over this and pull all dates 
+
+# TODO: use match instead of compile etc
+def find_date(data):
+	date_regex = re.match(r'^\d{1,2}\/d{1,2}\/\d{4}', data)
+	if data_regex is not  None:
+		return True
+	else:
+		return False
