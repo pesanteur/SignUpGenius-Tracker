@@ -2,10 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-url = "http://www.signupgenius.com/index.cfm?go=s.signup&urlid=10c084baaa82da2fe3-term159&view=standard"
+url = "http://www.signupgenius.com/go/10c084baaa82da2fe3-term162"
 
 r = requests.get(url)
 
+# TODO: Add tests so we don't have to rewrite
 data = r.text
 soup = BeautifulSoup(data, 'lxml')
 
@@ -35,10 +36,19 @@ def find_date(data):
 
 table_first = [item[0] for item in table_data] # gets the first item in the sublist BUT we want to iterate over this and pull all dates 
 
-# TODO: use match instead of compile etc
 def find_date(data):
-	date_regex = re.match(r'^\d{1,2}\/d{1,2}\/\d{4}', data)
+	""""Checks whether content of a cell is a date"""
+	date_regex = re.match(r'^\d{1,2}\/\d{1,2}\/\d{4}', data)
 	if data_regex is not  None:
 		return True
 	else:
 		return False
+
+list_for_dates = [] # Use a better variable name
+count = 0 # Useful to track number of cells without date, so we know what to add to first occuring date
+
+for i in range(len(table_data)):
+	cell_1 = table_data[i][0]
+	if find_date(cell_1):
+		list_for_dates.append(cell_1)
+	print(i) # For now
